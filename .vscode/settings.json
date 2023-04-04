@@ -11,6 +11,7 @@
     "todo_app\\.metadata": true,
     "todo_app\\analysis_options.yaml": true,
     "todo_app\\pubspec.lock": true,
-    "todo_app\\todo_app.iml": true
+    "todo_app\\todo_app.iml": true,
+    "todo_app\\build": true
   }
 }
