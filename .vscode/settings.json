@@ -1,0 +1,16 @@
+{
+  "files.exclude": {
+    "todo_app\\.dart_tool": true,
+    "todo_app\\.idea": true,
+    "todo_app\\android": true,
+    "todo_app\\ios": true,
+    "todo_app\\linux": true,
+    "todo_app\\macos": true,
+    "todo_app\\windows": true,
+    "todo_app\\web": true,
+    "todo_app\\.metadata": true,
+    "todo_app\\analysis_options.yaml": true,
+    "todo_app\\pubspec.lock": true,
+    "todo_app\\todo_app.iml": true
+  }
+}
