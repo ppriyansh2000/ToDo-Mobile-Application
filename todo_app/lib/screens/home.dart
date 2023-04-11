@@ -187,10 +187,12 @@ class _HomeState extends State<Home> {
       backgroundColor: const Color(0xFFEEEFF5),
       elevation: 0,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Icon(
-          Icons.menu,
+        IconButton(
           color: Colors.black87,
-          size: 30,
+          iconSize: 30,
+          onPressed: (){
+            print('hi');
+          }, icon: Icon(Icons.menu),//here
         ),
         Container(
           height: 40,
