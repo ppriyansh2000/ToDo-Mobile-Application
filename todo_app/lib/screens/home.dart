@@ -15,7 +15,7 @@ class _HomeState extends State<Home> {
   final _todoController = TextEditingController();
 
   @override
-  void initState(){
+  void initState() {
     _foundToDo = todoList;
     super.initState();
   }
@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color(0xFFEEEFF5),
       appBar: _buildAppBar(),
+      endDrawer: _buildDrawer(),
       body: Stack(
         children: [
           Container(
@@ -72,6 +73,7 @@ class _HomeState extends State<Home> {
       todo.isDone = !todo.isDone;
     });
   }
+
   //Deletes Item
   void _handleDelete(String id){
     setState(() {
@@ -90,9 +92,9 @@ class _HomeState extends State<Home> {
   // Search Box Functionality
   void _runFilter(String enterKeyword){
     List<ToDo> results = [];
-    if(enterKeyword.isEmpty){
+    if (enterKeyword.isEmpty) {
       results = todoList;
-    }else{
+    } else {
       results = todoList.where((item) => item.todoText!.toLowerCase().contains(enterKeyword.toLowerCase())).toList();
     }
     setState(() {
@@ -151,7 +153,7 @@ class _HomeState extends State<Home> {
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF5F52EE),
-          minimumSize: const Size(60,60),
+          minimumSize: const Size(60, 60),
           elevation: 10,
         ),
         child: const Text(
@@ -191,14 +193,8 @@ class _HomeState extends State<Home> {
     return AppBar(
       backgroundColor: const Color(0xFFEEEFF5),
       elevation: 0,
+      automaticallyImplyLeading: false,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        IconButton(
-          color: Colors.black87,
-          iconSize: 30,
-          onPressed: (){
-            print('hi');
-          }, icon: Icon(Icons.menu),//here
-        ),
         Container(
           height: 40,
           width: 40,
@@ -207,7 +203,44 @@ class _HomeState extends State<Home> {
             child: Image.asset('assets/images/x.jpg'),
           ),
         ),
+        Builder(
+            builder: (context) => IconButton(
+                  color: Colors.black87,
+                  iconSize: 30,
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                  icon: Icon(Icons.menu),
+                )),
       ]),
     );
   }
+}
+
+Widget _buildDrawer() {
+  return Drawer(
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        DrawerHeader(
+          child: Text('Drawer Header'),
+          decoration: BoxDecoration(
+            color: Colors.red,
+          ),
+        ),
+        ListTile(
+          title: Text('Settings'),
+          onTap: () {
+            // Setting page
+          },
+        ),
+        ListTile(
+          title: Text('Logout'),
+          onTap: () {
+            // Logout
+          },
+        ),
+      ],
+    ),
+  );
 }
