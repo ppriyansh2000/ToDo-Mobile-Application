@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/todo.dart';
 import '../widgets/todo_item.dart';
+import '../screens/drawer.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color(0xFFEEEFF5),
       appBar: _buildAppBar(),
-      endDrawer: _buildDrawer(),
+      endDrawer: AppDrawer(),
       body: Stack(
         children: [
           Container(
@@ -195,6 +196,7 @@ class _HomeState extends State<Home> {
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        //User Profile
         Container(
           height: 40,
           width: 40,
@@ -203,44 +205,7 @@ class _HomeState extends State<Home> {
             child: Image.asset('assets/images/x.jpg'),
           ),
         ),
-        Builder(
-            builder: (context) => IconButton(
-                  color: Colors.black87,
-                  iconSize: 30,
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                  icon: Icon(Icons.menu),
-                )),
       ]),
     );
   }
-}
-
-Widget _buildDrawer() {
-  return Drawer(
-    child: ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        DrawerHeader(
-          child: Text('Drawer Header'),
-          decoration: BoxDecoration(
-            color: Colors.red,
-          ),
-        ),
-        ListTile(
-          title: Text('Settings'),
-          onTap: () {
-            // Setting page
-          },
-        ),
-        ListTile(
-          title: Text('Logout'),
-          onTap: () {
-            // Logout
-          },
-        ),
-      ],
-    ),
-  );
 }
