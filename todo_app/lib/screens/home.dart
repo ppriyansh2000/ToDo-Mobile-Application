@@ -16,6 +16,7 @@ class _HomeState extends State<Home> {
   final todoList = ToDo.todoList();
   List<ToDo> _foundToDo = [];
   final _todoController = TextEditingController();
+  int checker = 0;
 
   @override
   void initState() {
@@ -36,12 +37,9 @@ class _HomeState extends State<Home> {
             child: Column(
               children: [
                 Container(
-                  child:  _SearchBox(),
+                  child: _SearchBox(),
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: _todoText()
-                ),
+                Container(alignment: Alignment.centerLeft, child: _todoText()),
                 Expanded(
                   child: ListView(
                     children: [
@@ -72,30 +70,41 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   //Switches Todo Item
-  void _handleToDoChange(ToDo todo){
+  void _handleToDoChange(ToDo todo) {
     setState(() {
       todo.isDone = !todo.isDone;
     });
   }
 
   //Deletes Item
-  void _handleDelete(String id){
+  void _handleDelete(String id) {
     setState(() {
-      todoList.removeWhere((item) => item.id==id);
+      todoList.removeWhere((item) => item.id == id);
     });
   }
+
   // Adds None Empty New to-do
-  void _addToDoItem(String toDo){
-    if(toDo.isNotEmpty){
+  void _addToDoItem(String toDo) {
+    for (ToDo item in _foundToDo) {
+      if (item.todoText?.toLowerCase() == toDo.toLowerCase()) {
+        checker = 1;
+      }
+    }
+
+    if (toDo.isNotEmpty && checker == 0) {
       setState(() {
         todoList.add(ToDo(id: DateTime.now().microsecondsSinceEpoch.toString(), todoText: toDo));
       });
       _todoController.clear();
     }
+
+    checker = 0;
   }
+
   // Search Box Functionality
-  void _runFilter(String enterKeyword){
+  void _runFilter(String enterKeyword) {
     List<ToDo> results = [];
     if (enterKeyword.isEmpty) {
       results = todoList;
@@ -106,6 +115,7 @@ class _HomeState extends State<Home> {
       _foundToDo = results;
     });
   }
+
   // "TO DO: "
   Container _todoText() {
     return Container(
@@ -119,6 +129,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   // Bottom Text Box
   Container _addTaskTextBox() {
     return Container(
@@ -145,6 +156,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   // Bottom Right Button
   Container _addTaskButton() {
     return Container(
@@ -168,6 +180,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   //Search Box
   Container _SearchBox() {
     return Container(
@@ -203,13 +216,12 @@ class _HomeState extends State<Home> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            height: 40,
-            width: 40,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset('assets/images/x.jpg'),
-            )
-          ),
+              height: 40,
+              width: 40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset('assets/images/x.jpg'),
+              )),
         ],
       ),
     );
