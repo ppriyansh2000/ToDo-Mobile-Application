@@ -3,7 +3,7 @@ import '../model/todo.dart';
 import '../widgets/todo_item.dart';
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -32,10 +32,13 @@ class _HomeState extends State<Home> {
             child: Column(
               children: [
                 _SearchBox(),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: _todoText()
+                ),
                 Expanded(
                   child: ListView(
                     children: [
-                      _todoText(),
                       for (ToDo todoo in _foundToDo.reversed)
                         ToDoItem(
                           todo: todoo,
@@ -63,27 +66,28 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
+  //Switches Todo Item
   void _handleToDoChange(ToDo todo){
     setState(() {
       todo.isDone = !todo.isDone;
     });
   }
-
+  //Deletes Item
   void _handleDelete(String id){
     setState(() {
       todoList.removeWhere((item) => item.id==id);
-      _foundToDo.removeWhere((item) => item.id ==id);
     });
   }
-
+  // Adds None Empty New to-do
   void _addToDoItem(String toDo){
-    setState(() {
-      todoList.add(ToDo(id: DateTime.now().microsecondsSinceEpoch.toString(), todoText: toDo));
-    });
-    _todoController.clear();
+    if(toDo.isNotEmpty){
+      setState(() {
+        todoList.add(ToDo(id: DateTime.now().microsecondsSinceEpoch.toString(), todoText: toDo));
+      });
+      _todoController.clear();
+    }
   }
-
+  // Search Box Functionality
   void _runFilter(String enterKeyword){
     List<ToDo> results = [];
     if(enterKeyword.isEmpty){
@@ -95,10 +99,10 @@ class _HomeState extends State<Home> {
       _foundToDo = results;
     });
   }
-
+  // "TO DO: "
   Container _todoText() {
     return Container(
-      margin: const EdgeInsets.only(top: 50, bottom: 20),
+      margin: const EdgeInsets.only(top: 20, bottom: 20),
       child: const Text(
         'To-Do:',
         style: TextStyle(
@@ -108,7 +112,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
+  // Bottom Text Box
   Container _addTaskTextBox() {
     return Container(
       margin: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
@@ -127,14 +131,14 @@ class _HomeState extends State<Home> {
       ),
       child: TextField(
         controller: _todoController,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Add a new todo item',
           border: InputBorder.none,
         ),
       ),
     );
   }
-
+  // Bottom Right Button
   Container _addTaskButton() {
     return Container(
       margin: const EdgeInsets.only(
@@ -157,7 +161,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
+  //Search Box
   Container _SearchBox() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -167,7 +171,7 @@ class _HomeState extends State<Home> {
       ),
       child: TextField(
         onChanged: (value) => _runFilter(value),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(0),
           prefixIcon: Icon(
             Icons.search,
@@ -182,6 +186,7 @@ class _HomeState extends State<Home> {
     );
   }
 
+  //Top Part of the App
   AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: const Color(0xFFEEEFF5),
