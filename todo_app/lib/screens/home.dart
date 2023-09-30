@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import '../model/todo.dart';
 import '../widgets/todo_item.dart';
@@ -24,16 +26,18 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEEEFF5),
       appBar: _buildAppBar(),
-      endDrawer: AppDrawer(),
+      endDrawer: const AppDrawer(),
+      backgroundColor: Theme.of(context).brightness == Brightness.dark ? Colors.black : Colors.white60,
       body: Stack(
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Column(
               children: [
-                _SearchBox(),
+                Container(
+                  child:  _SearchBox(),
+                ),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: _todoText()
@@ -105,7 +109,7 @@ class _HomeState extends State<Home> {
   // "TO DO: "
   Container _todoText() {
     return Container(
-      margin: const EdgeInsets.only(top: 20, bottom: 20),
+      margin: const EdgeInsets.only(top: 15, bottom: 15),
       child: const Text(
         'To-Do:',
         style: TextStyle(
@@ -121,7 +125,7 @@ class _HomeState extends State<Home> {
       margin: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).brightness == Brightness.dark ? Colors.grey : Colors.white,
         boxShadow: const [
           BoxShadow(
             color: Colors.grey,
@@ -169,7 +173,7 @@ class _HomeState extends State<Home> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).brightness == Brightness.dark ? Colors.grey : Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextField(
@@ -192,20 +196,22 @@ class _HomeState extends State<Home> {
   //Top Part of the App
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: const Color(0xFFEEEFF5),
       elevation: 0,
       automaticallyImplyLeading: false,
-      title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        //User Profile
-        Container(
-          height: 40,
-          width: 40,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.asset('assets/images/x.jpg'),
+      backgroundColor: Colors.transparent,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 40,
+            width: 40,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset('assets/images/x.jpg'),
+            )
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }
